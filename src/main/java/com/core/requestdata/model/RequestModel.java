@@ -5,14 +5,15 @@ import lombok.Data;
 @Data
 public class RequestModel {
 
-    private String document;
-    private String name;
-    private String phone;
-    private String phoneHome;
+    private String tipoDocumento;
+    private String documento;
+    private String nombre;
+    private String telefono;
+    private String telefonoLocal;
     private String motivo;
     private String plazo;
-    private String amountRequest;
-    private String amountDollar;
+    private String montoSolicitado;
+    private String montoDolar;
 
     
 }

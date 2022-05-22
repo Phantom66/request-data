@@ -1,6 +1,6 @@
 package com.core.requestdata.controller;
 
-import com.core.requestdata.model.Request;
+import com.core.requestdata.model.ClientResponse;
 import com.core.requestdata.model.RequestModel;
 import com.core.requestdata.model.ResponseModel;
 import com.core.requestdata.service.RequestDataServiceImpl;
@@ -23,7 +23,7 @@ public class RequestDataController {
     private RequestDataServiceImpl requestDataServiceImpl;
 
     @PostMapping("save-request-data")
-    public ResponseEntity<ResponseModel<Request>> getRequest(@RequestBody RequestModel requestModel) {
+    public ResponseEntity<ResponseModel<ClientResponse>> getRequest(@RequestBody RequestModel requestModel) {
         log.info("Controller {}", requestModel);
         return new ResponseEntity<>(requestDataServiceImpl.save(requestModel), HttpStatus.OK);
     }
