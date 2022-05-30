@@ -1,7 +1,9 @@
 package com.core.requestdata.presenter;
 
+import com.core.requestdata.business.BalanceProcessing;
 import com.core.requestdata.model.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -13,6 +15,9 @@ import java.util.List;
 @Slf4j
 @Component
 public class BalancePresenter {
+
+    @Autowired
+    BalanceProcessing balanceProcessing;
 
     public void setRequest(RequestModel in, Request out){ 
         Client client = new Client();
@@ -64,5 +69,19 @@ public class BalancePresenter {
         log.info("date:", date);
         return date;
 
+    }
+
+    public BalanceCoreModel convertToCore(BalanceCoreModel balanceCoreModel, BalanceRequestModel balanceRequestModel, Request request) {
+
+        Long clientId = request.getClient().getId();
+        int typeCreditId = request.getTypeCreditid();
+        balanceCoreModel.setClientId(clientId);
+        balanceCoreModel.setTypeCreditId(typeCreditId);
+        balanceCoreModel.setRequestId(balanceRequestModel.getId());
+        balanceCoreModel.setExpenseTotal(balanceProcessing.calculateExpenseTotal(balanceRequestModel));
+        balanceCoreModel.setIncomeAverage(balanceProcessing.calculateIncomeAverage(balanceRequestModel));
+        balanceCoreModel.setAmountRequest(request.getAmountRequest());
+
+        return balanceCoreModel;
     }
 }

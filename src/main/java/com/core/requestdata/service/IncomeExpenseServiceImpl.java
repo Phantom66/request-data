@@ -39,14 +39,17 @@ public class IncomeExpenseServiceImpl implements IncomeExpenseService {
     @Override
     public ResponseModel<BalanceResponseModel> saveBalance(BalanceRequestModel balanceRequestModel) throws ParseException {
 
+        BalanceCoreModel balanceCoreModel = new BalanceCoreModel();
+        Request request = requestDataRepository.getById(balanceRequestModel.getId());
+
+        balanceCoreModel = balancePresenter.convertToCore(balanceCoreModel, balanceRequestModel, request);
 
         List<ExpenseModel> egresos = balanceRequestModel.getEgresos();
+
         Integer count=0;
         List<Expense> expenseRecords = new ArrayList<>();
 
-
         for (ExpenseModel expenseModel : egresos){
-            Request request = requestDataRepository.getById(balanceRequestModel.getId());
             Expense expense = new Expense();
             expense.setDateExpense(balancePresenter.getDate());
             expense.setAmountExpense(expenseModel.getAmount());
@@ -62,7 +65,6 @@ public class IncomeExpenseServiceImpl implements IncomeExpenseService {
 
         for (IncomeModel incomeModel : ingresos){
             LocalDate lastMonth    = thisMonth.minusMonths(count);
-            Request request = requestDataRepository.getById(balanceRequestModel.getId());
             Income income = new Income();
 
             income.setRequest(request);
