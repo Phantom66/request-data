@@ -1,5 +1,6 @@
 package com.core.requestdata.presenter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import com.core.requestdata.model.Client;
 import com.core.requestdata.model.ClientResponse;
@@ -43,5 +44,5 @@ public class RequestPresenter {
         setClientResponse(request, clientResponse);
         return new ResponseModel<ClientResponse>("00", "Su registro ha sido exitoso", clientResponse);
     }
-    
+
 }
